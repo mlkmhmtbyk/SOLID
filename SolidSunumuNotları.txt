@@ -1,0 +1,125 @@
+Herkese merhaba,
+Sunumuma öncelikle kendimi tanıtarak başlamak istiyorum.
+Bir çoğunuzla tanışıyoruz ama beni tanımayanlar için ismim Melik.
+Müşteri Değerlendirme Sistemleri ekibinde yazılım mühendisi olarak çalışıyorum.
+2022 yılında istanbul teknik üniversitesinden mezun olduktan sonra burada tam zamanlı olarak başladım.
+Öncesinde de part time olarak yaklaşık 3 yıl yine MDS deydim.
+
+Intertech olarak object oriented yazılımlar üretiyoruz ve bunların kalitesinden ve bakımından biz sorumluyuz.
+1990 lı yılların sonuna doğru Object oriented programlamanın yaygınlaşmasıyla yazılm mühendisleri kaliteli kod üzerine patternler ve prensipler geliştirdiler.
+Bu prensipler veya patternler günümüzde de geçerliliklerini korumaktalar.
+Nedir bunlar.
+Software Design paternleri: Gang of Four adıyla anılan 4 tane mühendisin üzerine düşünüp yayınladığı bir pattern.
+Onun dışında Grasp paternleri yani General Responsibility Assignment Software Patterns var. Bunu da Craig Larman 97 yılında çıkan kitabında bu paternlerden bahsetmiş.
+Bir de SOLID prensipleri var. Bunlar prensipler de 2000 yılında Robert amca lakaplı Robert Cecil Martin tarafından düzenlenmiş.
+Ben de sunumumda bu SOLID prensiplerini tekrar hatırlayıp ayrıntılarıyla birlikte size aktarmak istiyorum.
+
+Öncelikle SOLID bir kısaltma. 
+Sağlam, geliştirmesi hızlı, bakımı ve aktarımı kolay yazılımlar geliştirmek amacıyla belirlenmiş 5 patternin baş harfleri aslında solid.
+Nedir bu paternler.
+Sigle Responsibility 
+Open Closed 
+Liskov Substitution 
+Interface Segregation ve
+Dependency Inversion.
+Bu 5 prensibi tek tek kod örnekleriyle birlikte inceleyeceğiz.
+
+
+Birinci prensip Single Responsibility
+Nedir bu prensip
+Bir class yalnızca bir amaç uğruna değiştirilebilir, o amaçta o classa yüklenen sorumluluktur, yani bir class’ın yapması gereken yalnızca bir işi olması gerekir.
+Bir isviçre çakısına her ihtiyacımız olan aleti ekleyip işlerimizin hepsini o çakıyla görmememiz ne kadar zor ise,
+yazılımda da aynı şekilde bir classa ne kadar fazla sorumluluk yüklersek o kadar fazla değişime uğramak zorunda kalır ve kullanımı zorlaşır.
+Bu yüzden bir sınıfı veya fonksiyonu geliştirdiğimizde sorumluluğunu iyi belirleyip ona göre tasarlamamız gerekir.
+Sorumluluğun daha az olması değişime daha kolay adapte olması anlamına gelmektedir.
+
+Buradaki örnekte hem business kısmı hem de persistence kısmı aynı class içersinde yönetilmiş.
+Bunların ayrılması gerekiyor.
+Bu örnekteki gibi farklı sorumluluklar için farklı classları kullanmalıyız ve her bir classın sorumluluğu yalnızca bir tane olmalıdır.
+
+Bu prensipe uyan kodların faydalarını sayarsak
+Öncelikle test geliştirmesi çok kolay olackatır. Bir sınıfın sadece bir sorumluluğu olduğunu düşünürsek sadece o sorumluluğunu kontrol eden bir test yeterli olacaktır.
+Onun dışında bağımlılıkları azaltmış olacağız. Bu da kod üzerinde modifikasyonları kolaylaştıracaktır.
+Bir de kod okuması kolay ve anlaşılır kodlar yazmış olacağız.
+
+Bir sonraki prensip open closed prensibi. Nedir bu prensip:
+Bir class ya da fonksiyon var olan özellikleri korumalı yani davranışını değiştirmiyor olmalı ve yeni özellikler kazanabilmelidir.
+Yani bir class temel özelliklerinin değişimine kapalı ama geliştirmeye açık olmalıdır.
+Yazılım geliştirirken gelecekte ihtiyaç olacak olan özellikleri ve geliştirmeleri her ayrıntısıyla ön göremeyiz.
+O yüzden yeni gelecek özellikler için var olan kodu değiştirmeye gerek kalmadan esnek bir geliştirme modeli uygulamalıyız.
+
+Bu örnekte ödeme yöntemleri enum şeklinde verilmiş. Yeni bir yönteme ihtiyaç duyulduğunda classın içinde bir değişiklik yapılmaya ihtiyaç duyulacak.
+Bunun önüne şu şekilde geçilebilir. Sanal bir base class oluşturup ihtiyaç olan tüm ödeme yöntemlerini bu classtan türeterek kullanabiliriz.
+
+Bu prensip bize esneklik sağlar. Yani yazılımın mevcut özelliklerine ek yapabiliriz.
+Onun dışında bakım kolaylığı sağlar. Kodda hata ayıklama ve düzeltmeler daha kolay yapılabilir.
+Bir de aynı classı başka alanlar üzerinde yapısını değiştirmeden tekrar kullanabiliriz.
+
+Bir sonraki prensip Liskov Substitution prensibi
+Adını bu prensibi ilk ortaya atan Barbara Liskovdan almıştır.
+Türeyen classlar ana classın tüm özelliklerini ve metotlarını aynı işlevi gösterecek şekilde kullanabilme ve kendine ait yeni özellikler barındırabilmelidir.
+
+Bu örnekte liskov Substitution prensibine aykırı hareket edilmiş.
+Base classtan türetilen classların base calsstan türetilen classların arasında farklılık var ve ikinci class base classın bir methodunu kullanmamış.
+Bunu bu şekilde base classın özelliklerini kullanacak şekilde düzenleyerek Liskov prensibini uygulayabiliriz.
+
+Bu prensibin faydalarını sayarsak
+Parçalılık yani modularity katmış oluruz. Sınıfları birbirinden ayrı olarak kullanabilme özelliği kazanırız.
+Ve bu sayede bu sınıfları başka yerlerde tekrar kullanabiliriz.
+Ve yine bakımı ve hata ayıklaması daha kolay okunabilir bir yazılım geliştirmiş oluruz.
+
+Bir sonraki prensip ise Interface Segregation prensibidir.
+Bu prensib de şunu söylüyor.
+Sorumlulukların hepsini tek bir Interface e toplamak yerine daha özelleştirilmiş birden fazla Interface oluşturmayı tercih etmeliyiz.
+Yani her farklı sorumluluğun kendine özgü bir Interface'i olması gerekmektedir. Böylece Interface'in kullanıldığı yerde sadece ihtiyaç olan özellikle ilgilenilmiş olur.
+Birden fazla amaç için yazılan Interfacelerde gerektiğinden fazla özellik ekliyoruz demektir.
+Single Responsibility ile de birbirine baya yakın bu prensip. Aradaki fark ise bu prensip Interfacelerle ilgileniyorken Single Responsibility classlarla ilgilidir.
+
+Buradaki örnekte bir interface iki farklı özellik yüklenmiş.
+Bunun doğrusu ise bu şekilde iki farklı interface kullanılması olmalı. 
+
+Bu prensibin faydalarında ise en başta kod karmaşıklığını azaltmasını sayabiliriz.
+Gereksiz intertfacelerin implement edilmesinin önüne geçilmiş olur ve yazılımın complexitysi azalır.
+Onun dışında yeniden kullanılabilirik ve ekleme çıkarma yapmada kolaylık sağlar.
+
+Son prensip ise Dependency Inversion
+Bu prensip de şunu belirtiyor
+Classlar arası bağımlılıklar olabildiğince az olmalıdır özellikle üst seviye Classlar alt seviye Classlara bağımlı olmamalıdır.
+Yüksek seviye ve düşük seviye Classlar arasında bir soyutlama katmanı oluşturmalıyız.
+Yüksek seviye Classlarda bir davranış değiştiğinde, alt seviye Classların bu değişime uyum sağlaması gerekir. 
+Ancak, düşük seviye Classlarda bir davranış değiştiğinde, üst seviye Classların davranışında bir bozulma meydana gelmemelidir.
+Bunun için de her bu Classların arasında bir soyutlama katmanı kullanmalıyız.
+
+Kod örneğine bakalım
+Burada Email gönderme ve SMS gönderme işlemini yapan iki classımız var.
+Ve bildirim göndereceğimizde ikisini birden çalıştıran Notification classı var.
+Burada Notification classı yüksek seviye bir class olmasına rağmen bu iki classa bağımlı.
+Bu bağımlılığı interface kullnarak kaldırabiliriz.
+Bunun için message interface ini oluşturduk.
+Email vs SMS classlarını da bu interface ile implemet edelim
+Artık Notificaiton classının email ve sms classlarıyla bağlantısını kaldırdık.
+
+Son olarak bu prensibin faydalarını sayarsak
+Bağımlılıkların azalmasını sağlıyor ve Dependency Injection ı, yani bağımlılıkların parametre olarak geçilebilmesini sağlıyor.
+
+Sunumumun sonuna geldim beni dinledğiniz için çok teşekkür derim. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
